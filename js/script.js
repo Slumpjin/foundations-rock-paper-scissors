@@ -15,12 +15,19 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
     // make player selection case insensitive
-
+    const userSelection = playerSelection.toLowerCase();
     // check for a tie
-
+    if (userSelection === computerSelection) {
+        return `Tie! ${userSelection} equals ${computerSelection}`;
+    }
     // check for cases where computer beats player
-
+    if ((userSelection === 'rock' && computerSelection === 'paper') ||
+        (userSelection === 'paper' && computerSelection === 'scissors') ||
+        (userSelection === 'scissors' && computerSelection === 'rock')) {
+        return `You Lose! ${computerSelection} beats ${userSelection}`;
+    }
     // else return a win for the player
+    return `You Win! ${userSelection} beats ${computerSelection}`;
 }
 
 function playGame() {
@@ -30,3 +37,7 @@ function playGame() {
 
     // show the final score
 }
+
+const playerSelection = "rock";
+const computerSelection = getComputerChoice();
+console.log(playRound(playerSelection, computerSelection));
