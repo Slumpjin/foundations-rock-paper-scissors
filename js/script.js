@@ -46,21 +46,13 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function playGame() {
-    // create counter variables for the current game iteration and scores
-    const MAX_GAMES = 5;
-    let currentGame = 1;
     let playerScore = computerScore = 0;
-    // for each round, prompt the user and display round results
-    while (currentGame <= MAX_GAMES) {
-        console.log(`Round ${currentGame}...`)
-        let roundResult = playRound(getUserChoice(), getComputerChoice());
-        if (roundResult === 1) {
-            playerScore++;
-        }
-        else if (roundResult === -1) {
-            computerScore++;
-        }
-        currentGame++;
+    let roundResult = playRound(getUserChoice(), getComputerChoice());
+    if (roundResult === 1) {
+        playerScore++;
+    }
+    else if (roundResult === -1) {
+        computerScore++;
     }
     // show the final score
     console.log(`Final Score... Player: ${playerScore} Computer: ${computerScore}`);
