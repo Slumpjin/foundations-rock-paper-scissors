@@ -1,3 +1,17 @@
+let playerScore = computerScore = 0;
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => button.addEventListener('click', (e) => {
+    const playerSelection = e.target.innerText;
+    let roundResult = playRound(playerSelection, getComputerChoice());
+    if (roundResult === 1) {
+        playerScore++;
+    }
+    else if (roundResult === -1) {
+        computerScore++;
+    }
+}));
+
 function getComputerChoice() {
     // generate a random number between 1-3 inclusive
     const randomHandSign = Math.ceil(Math.random() * 3);
@@ -57,5 +71,3 @@ function playGame() {
     // show the final score
     console.log(`Final Score... Player: ${playerScore} Computer: ${computerScore}`);
 }
-
-playGame();
