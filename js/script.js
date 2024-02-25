@@ -1,73 +1,53 @@
 let playerScore = computerScore = 0;
+const playerScoreDiv = document.querySelector('.player-score');
+const computerScoreDiv = document.querySelector('.computer-score');
+const resultDiv = document.querySelector('.result');
 
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => button.addEventListener('click', (e) => {
     const playerSelection = e.target.innerText;
-    let roundResult = playRound(playerSelection, getComputerChoice());
+    const computerSelection = getComputerChoice();
+    let roundResult = playRound(playerSelection, computerSelection);
     if (roundResult === 1) {
         playerScore++;
+        playerScoreDiv.innerText = `Player score: ${playerScore}`;
+        resultDiv.innerText = `You Win! ${playerSelection} beats ${computerSelection}`;
     }
     else if (roundResult === -1) {
         computerScore++;
+        computerScoreDiv.innerText = `Computer score: ${computerScore}`;
+        resultDiv.innerText = `You Lose! ${computerSelection} beats ${playerSelection}`;
+    }
+    else if (roundResult === 0) {
+        resultDiv.innerText = `Tie! ${playerSelection} equals ${computerSelection}`;
+    }
+    if (playerScore >= 5 || computerScore >= 5) {
+        resultDiv.innerText = playerScore === 5 ? 'You win the game!' : 'Computer wins the game!';
+        buttons.forEach(button => button.disabled = true);
     }
 }));
 
 function getComputerChoice() {
-    // generate a random number between 1-3 inclusive
     const randomHandSign = Math.ceil(Math.random() * 3);
-    // switch through cases and return a string
     switch (randomHandSign) {
         case 1:
-            return 'rock';
+            return 'Rock';
         case 2:
-            return 'paper';
+            return 'Paper';
         case 3:
-            return 'scissors';
+            return 'Scissors';
     }
-}
-
-function getUserChoice() {
-    let userChoice;
-    do {
-        userChoice = prompt('Rock. Paper. Scissors. Shoot!');
-    } while (!validUserChoice(userChoice));
-    return userChoice;
-}
-
-function validUserChoice(userChoice) {
-    const choice = userChoice.toLowerCase();
-    return choice === 'rock' || choice === 'paper' || choice === 'scissors';
 }
 
 function playRound(playerSelection, computerSelection) {
-    // make player selection case insensitive
-    const userSelection = playerSelection.toLowerCase();
-    // check for a tie
+    const userSelection = playerSelection;
     if (userSelection === computerSelection) {
-        console.log(`Tie! ${userSelection} equals ${computerSelection}`);
         return 0;
     }
-    // check for cases where computer beats player
-    if ((userSelection === 'rock' && computerSelection === 'paper') ||
-        (userSelection === 'paper' && computerSelection === 'scissors') ||
-        (userSelection === 'scissors' && computerSelection === 'rock')) {
-        console.log(`You Lose! ${computerSelection} beats ${userSelection}`);
+    if ((userSelection === 'Rock' && computerSelection === 'Paper') ||
+        (userSelection === 'Paper' && computerSelection === 'Scissors') ||
+        (userSelection === 'Scissors' && computerSelection === 'Rock')) {
         return -1;
     }
-    // else return a win for the player
-    console.log(`You Win! ${userSelection} beats ${computerSelection}`);
     return 1;
-}
-
-function playGame() {
-    let playerScore = computerScore = 0;
-    let roundResult = playRound(getUserChoice(), getComputerChoice());
-    if (roundResult === 1) {
-        playerScore++;
-    }
-    else if (roundResult === -1) {
-        computerScore++;
-    }
-    // show the final score
-    console.log(`Final Score... Player: ${playerScore} Computer: ${computerScore}`);
 }
