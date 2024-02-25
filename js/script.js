@@ -5,7 +5,7 @@ const resultDiv = document.querySelector('.result');
 
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => button.addEventListener('click', (e) => {
-    const playerSelection = e.target.innerText;
+    const playerSelection = e.target.value;
     const computerSelection = getComputerChoice();
     let roundResult = playRound(playerSelection, computerSelection);
     if (roundResult === 1) {
